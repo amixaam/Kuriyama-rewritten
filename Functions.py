@@ -1,5 +1,5 @@
 import json
-from operator import contains
+import datetime
 import discord
 
 async def LoadJson(jsonname):
@@ -18,12 +18,15 @@ async def CreateEmbed():
 
 async def CreateUser(id):
     data = await LoadJson("data")
-    data[id] = await LoadJson("USERTEMPLATE")
+    if id not in data:
+        data[id] = await LoadJson("USERTEMPLATE")
+        return data
     return data
 
 async def UpdateUser(data, id):
-    for key, value in data[id]["economy"]:
-        if value < 0: data[id]["economy"]["key"] = 0
+    for key, value in data[id]["economy"].items():
+        if value < 0: data[id]["economy"][key] = 0
+    return data
     
 async def NamePrettier(text):
     if (text[-1] == 's'): return text + "'"
@@ -37,5 +40,7 @@ async def TextToSeconds(text): #can only do 1 so far
     elif "h" in text:
         return int(text.replace('h', '')) * 60 * 60
     elif "d" in text:
-        return int(text.replace('m', '')) * 60 * 60 * 24
+        return int(text.replace('d', '')) * 60 * 60 * 24
 
+async def SecondsToText(seconds):
+    return str(datetime.timedelta(seconds=seconds))

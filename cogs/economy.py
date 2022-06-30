@@ -1,7 +1,10 @@
-from email import message
 import discord
 from discord.ext import commands
+from datetime import *
+import time
+import random
 from Functions import *
+
 
 class Economy(commands.Cog):
 
@@ -13,7 +16,7 @@ class Economy(commands.Cog):
         user = ctx.author if not user else user
         uid = str(user.id)
         data = await LoadJson("data")
-
+        
         if uid not in data:
             if user == ctx.author: data = await CreateUser(uid)
             else: return await ctx.send("This user hasn't made a profile.")
@@ -49,8 +52,26 @@ class Economy(commands.Cog):
 
     @commands.command()
     async def daily(self, ctx):
+        uid = str(ctx.author.id)
         settings = await LoadJson("settings")
-        await ctx.send(await TextToSeconds(settings["timer"]["daily"]))
+        data = await LoadJson("data")
+        data = await CreateUser(uid)
+        if str(date.today().day) == data[uid]['timer']['daily']: #if it is the same day
+            tomorrow = date.today() + timedelta(1)
+            midnight = datetime.combine(tomorrow, time.time())
+            now = datetime.now()
+            return (midnight - now).seconds
+            return await ctx.send("wait for " + await SecondsToText((midnight - datetime.now()).seconds - datetime.now()))
+        
+        dailyValue = int(1000 * (random.randrange(10, 14) / 10)) #up to a 1.4% bonus
+        data[uid]['timer']['daily'] = str(date.today().day)
+        data[uid]['economy']['pockets'] += dailyValue
+        data[uid]['statistic']['daily']['times'] += 1
+        data[uid]['statistic']['daily']['earned'] += dailyValue
+
+        data = await UpdateUser(data, uid)
+        await DumpJson("data", data)
+        await ctx.send("doned!")
 
 def setup(client):
     client.add_cog(Economy(client))

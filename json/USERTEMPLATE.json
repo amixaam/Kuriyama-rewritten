@@ -8,11 +8,11 @@
     "other": {
         "daily": 0
     },
-    "timers": {
-        "daily": null,
-        "gamble": null
+    "timer": {
+        "daily": 0,
+        "gamble": 0
     },
-    "statistics": {
+    "statistic": {
         "daily": {
             "times": 0,
             "earned": 0,
