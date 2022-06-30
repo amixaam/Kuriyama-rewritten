@@ -8,11 +8,11 @@ class Helpful(commands.Cog):
     def __init__(self, client):
        self.client = client
 
-    @commands.command()
+    @commands.command(brief='check ping')
     async def ping(self, ctx):
         await ctx.send(f'pingers: {round(self.client.latency * 1000)}ms')
 
-    @commands.command()
+    @commands.command(brief='debug purpouses')
     async def debug(self, ctx):
         settings = await LoadJson("settings")
         data = await LoadJson("data")
@@ -27,19 +27,19 @@ class Helpful(commands.Cog):
         await ctx.send("no permission")
 
     #owner commands
-    @commands.command()
+    @commands.command(brief='debug purpouses')
     @commands.is_owner()
     async def load(self, ctx, extension):
         self.client.load_extension(f'cogs.{extension}')
         await ctx.send('loaded!')
 
-    @commands.command()
+    @commands.command(brief='debug purpouses')
     @commands.is_owner()
     async def unload(self, ctx, extension):
         self.client.unload_extension(f'cogs.{extension}')
         await ctx.send('unloaded!')
 
-    @commands.command()
+    @commands.command(brief='debug purpouses')
     @commands.is_owner()
     async def reload(self, ctx, extension = None):
         if (extension == None): #reload all cogs

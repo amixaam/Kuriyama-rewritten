@@ -1,23 +1,22 @@
 {
     "428592574723522560": {
         "economy": {
-            "pockets": 1100,
+            "pockets": 1313,
             "bank": 0,
-            "total": 0,
-            "net": 0
+            "total": 1313,
+            "net": 1313
         },
         "other": {
             "daily": 0
         },
         "timer": {
-            "daily": "30",
-            "gamble": 0
+            "daily": "30/06/2022"
         },
         "statistic": {
             "daily": {
                 "times": 1,
-                "earned": 1100,
-                "streak": 0
+                "earned": 1313,
+                "streak": 1
             },
             "gamble": {
                 "times": 0,
@@ -25,6 +24,7 @@
                 "lost": 0
             },
             "inventoryOpened": 0
-        }
+        },
+        "debug": false
     }
 }

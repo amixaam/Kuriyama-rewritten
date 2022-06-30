@@ -1,6 +1,9 @@
 import json
 import datetime
+from math import floor
 import discord
+
+embedColors = [0x8cffab, 0xff7875]
 
 async def LoadJson(jsonname):
     with open(f"./json/{jsonname}.json", "r", encoding="utf-8") as f:
@@ -24,8 +27,11 @@ async def CreateUser(id):
     return data
 
 async def UpdateUser(data, id):
-    for key, value in data[id]["economy"].items():
-        if value < 0: data[id]["economy"][key] = 0
+    economy = data[id]["economy"]
+    for key, value in economy.items():
+        if value < 0: economy[key] = 0
+    
+    economy['total'] = economy['pockets'] + economy['bank']
     return data
     
 async def NamePrettier(text):
@@ -44,3 +50,34 @@ async def TextToSeconds(text): #can only do 1 so far
 
 async def SecondsToText(seconds):
     return str(datetime.timedelta(seconds=seconds))
+
+async def AbreviationToInt(text, amount):
+    half = ["half", "h"]
+    all = ["all", "a"]
+
+    text = text.lower()
+    if text in half:
+        return floor(amount / 2)
+    elif text in all:
+        return amount
+    else:
+        try:
+            if int(text) > amount:
+                return f"Cannot enter a number above your total {amount}"
+            elif int(text) <= 0:
+                return "Cannot enter a number smaller or equal to 0."
+            else:
+                return int(text)
+        except:
+            return f"Supported short words: {half}, {all}. Please use full numbers or these words!"
+
+async def changeBalance(data, id, amount): #for easier transaction stuff
+    economy = data[id]['economy']
+    if (amount >= 0 ):
+        economy['pockets'] += amount
+        economy['net'] += amount
+        return data
+    
+    economy['pockets'] += amount
+    return data
+        
