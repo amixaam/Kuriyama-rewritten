@@ -5,7 +5,6 @@ import json
 import os
 
 intents = discord.Intents.default()
-intents.message_content = True
 client = commands.Bot(command_prefix='k', intents=intents)
 
 with open(f"./json/settings.json", "r", encoding="utf-8") as f:
