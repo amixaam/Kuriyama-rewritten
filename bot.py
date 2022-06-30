@@ -5,7 +5,7 @@ import json
 import os
 
 intents = discord.Intents.default()
-client = commands.Bot(command_prefix='k', intents=intents)
+client = commands.Bot(command_prefix='kuri ', intents=intents)
 
 with open(f"./json/settings.json", "r", encoding="utf-8") as f:
     settings = json.load(f)

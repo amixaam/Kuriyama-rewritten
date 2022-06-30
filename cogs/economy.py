@@ -1,3 +1,4 @@
+from email import message
 import discord
 from discord.ext import commands
 from Functions import *
@@ -9,7 +10,13 @@ class Economy(commands.Cog):
 
     @commands.command()
     async def profile(self, ctx):
-        await ctx.send("profile");   
+        user = ctx.author
+        data = LoadJson("data")
+        if user not in data:
+            CreateUser(user)
+
+        await ctx.send("profile")
+        await DumpJson("data", data)
 
 def setup(client):
     client.add_cog(Economy(client))

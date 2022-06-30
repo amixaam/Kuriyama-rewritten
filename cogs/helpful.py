@@ -32,11 +32,11 @@ class Helpful(commands.Cog):
                 if filename.endswith('.py'):
                     self.client.unload_extension(f'cogs.{filename[:-3]}')
                     self.client.load_extension(f'cogs.{filename[:-3]}')
-            await ctx.send('reloaded!')
+            await ctx.send('all cogs reloaded!')
         else: #reload specific cog
             self.client.unload_extension(f'cogs.{extension}')
             self.client.load_extension(f'cogs.{extension}')
-            await ctx.send('reloaded!')
+            await ctx.send(f'{extension} reloaded!')
 
 def setup(client):
     client.add_cog(Helpful(client))
