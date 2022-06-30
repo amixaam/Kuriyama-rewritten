@@ -1,8 +1,28 @@
 {
-    "isStrange": 1,
-    "ass":{
-        "or":1,
-        "tits":2,
-        "list": [2,2,2]
+    "economy": {
+        "pockets": 0,
+        "bank": 0,
+        "total": 0,
+        "net": 0
+    },
+    "other": {
+        "daily": 0
+    },
+    "timers": {
+        "daily": null,
+        "gamble": null
+    },
+    "statistics": {
+        "daily": {
+            "times": 0,
+            "earned": 0,
+            "streak": 0
+        },
+        "gamble": {
+            "times": 0,
+            "earned": 0,
+            "lost": 0
+        },
+        "inventoryOpened": 0
     }
 }

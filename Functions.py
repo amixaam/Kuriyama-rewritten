@@ -17,5 +17,5 @@ async def CreateEmbed():
 
 async def CreateUser(id):
     data = await LoadJson("data")
-    data[int(id)] = await LoadJson("USERTEMPLATE")
-    await DumpJson("data", data)
+    data[id] = await LoadJson("USERTEMPLATE")
+    return data

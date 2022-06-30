@@ -10,12 +10,15 @@ class Economy(commands.Cog):
 
     @commands.command()
     async def profile(self, ctx):
-        user = ctx.author
+        uid = str(ctx.author.id)
         data = await LoadJson("data")
-        if user.id not in data:
-            await CreateUser(user)
-
-        await ctx.send("profile")
+        if uid not in data:
+            data = await CreateUser(uid)
+            
+        embed = await CreateEmbed()
+        embed.set_author(name="Your profile!")
+        embed.description = data[uid]["economy"]["total"]
+        await ctx.send(embed=embed)
         await DumpJson("data", data)
 
 def setup(client):
