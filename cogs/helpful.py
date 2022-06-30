@@ -1,5 +1,6 @@
 import discord, datetime, os
 from discord.ext import commands
+from Functions import *
 
 class Helpful(commands.Cog):
 
