@@ -1,4 +1,5 @@
 import json
+from operator import contains
 import discord
 
 async def LoadJson(jsonname):
@@ -20,6 +21,21 @@ async def CreateUser(id):
     data[id] = await LoadJson("USERTEMPLATE")
     return data
 
+async def UpdateUser(data, id):
+    for key, value in data[id]["economy"]:
+        if value < 0: data[id]["economy"]["key"] = 0
+    
 async def NamePrettier(text):
     if (text[-1] == 's'): return text + "'"
     else: return text + "'s"
+
+async def TextToSeconds(text): #can only do 1 so far
+    if "s" in text:
+        return int(text.replace('s', ''))
+    elif "m" in text:
+        return int(text.replace('m', '')) * 60
+    elif "h" in text:
+        return int(text.replace('h', '')) * 60 * 60
+    elif "d" in text:
+        return int(text.replace('m', '')) * 60 * 60 * 24
+
