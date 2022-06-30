@@ -1,3 +1,4 @@
+from distutils.log import debug
 import discord, datetime, os
 from discord.ext import commands
 from Functions import *
@@ -10,6 +11,20 @@ class Helpful(commands.Cog):
     @commands.command()
     async def ping(self, ctx):
         await ctx.send(f'pingers: {round(self.client.latency * 1000)}ms')
+
+    @commands.command()
+    async def debug(self, ctx):
+        settings = await LoadJson("settings")
+        data = await LoadJson("data")
+        uid = str(ctx.author.id)
+
+        if uid in settings["debug"]:
+            if "debug" not in data[uid]:
+                data[uid]["debug"] = False
+            data[uid]["debug"] = not data[uid]["debug"]
+            await DumpJson("data", data)
+            return await ctx.send(f'debug turned {data[uid]["debug"]}')
+        await ctx.send("no permission")
 
     #owner commands
     @commands.command()

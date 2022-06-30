@@ -25,6 +25,7 @@
                 "lost": 0
             },
             "inventoryOpened": 0
-        }
+        },
+        "debug": false
     }
 }

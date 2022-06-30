@@ -19,3 +19,7 @@ async def CreateUser(id):
     data = await LoadJson("data")
     data[id] = await LoadJson("USERTEMPLATE")
     return data
+
+async def NamePrettier(text):
+    if (text[-1] == 's'): return text + "'"
+    else: return text + "'s"
