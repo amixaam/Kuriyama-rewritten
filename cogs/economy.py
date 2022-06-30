@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
-from datetime import datetime, timedelta, time, date
+import datetime
+from datetime import *
 import random
 from Functions import *
 
