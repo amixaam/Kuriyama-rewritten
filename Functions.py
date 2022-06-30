@@ -16,6 +16,6 @@ async def CreateEmbed():
     return embed
 
 async def CreateUser(id):
-    economy = await LoadJson("data")
-    economy[int(id)] = await LoadJson("USERTEMPLATE")
-    await DumpJson("data", economy)
+    data = await LoadJson("data")
+    data[int(id)] = await LoadJson("USERTEMPLATE")
+    await DumpJson("data", data)

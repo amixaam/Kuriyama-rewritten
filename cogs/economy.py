@@ -11,9 +11,9 @@ class Economy(commands.Cog):
     @commands.command()
     async def profile(self, ctx):
         user = ctx.author
-        data = LoadJson("data")
-        if user not in data:
-            CreateUser(user)
+        data = await LoadJson("data")
+        if user.id not in data:
+            await CreateUser(user)
 
         await ctx.send("profile")
         await DumpJson("data", data)
