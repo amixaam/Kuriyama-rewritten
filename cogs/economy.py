@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
-from datetime import *
-import time
+from datetime import datetime, timedelta, time, date
 import random
 from Functions import *
 
@@ -57,10 +56,9 @@ class Economy(commands.Cog):
         data = await LoadJson("data")
         data = await CreateUser(uid)
         if str(date.today().day) == data[uid]['timer']['daily']: #if it is the same day
-            tomorrow = date.today() + timedelta(1)
-            midnight = datetime.combine(tomorrow, time.time())
             now = datetime.now()
-            return (midnight - now).seconds
+            midnight = datetime.combine(now + timedelta(days=1), time())
+            seconds_until_midnight = (midnight - now).seconds
             return await ctx.send("wait for " + await SecondsToText((midnight - datetime.now()).seconds - datetime.now()))
         
         dailyValue = int(1000 * (random.randrange(10, 14) / 10)) #up to a 1.4% bonus
