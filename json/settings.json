@@ -1,9 +1,9 @@
 {
     "version": "1.0",
-    "debug": ["428592574723522560"],
-    "prefix": ["kuri "],
+    "debug": [""],
+    "prefix": ["kuri ", "kuri."],
     "currency": ["¥", "yen"],
-    "traceback": 805521077294858261,
+    "traceback": 0,
 
     "timer": {
         "gamble": "1s"

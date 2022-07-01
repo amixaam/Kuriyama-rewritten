@@ -4,11 +4,12 @@ import traceback
 import json
 import os
 
-intents = discord.Intents.default()
-client = commands.Bot(command_prefix='kuri ', intents=intents)
-
 with open(f"./json/settings.json", "r", encoding="utf-8") as f:
     settings = json.load(f)
+
+intents = discord.Intents.default()
+client = commands.Bot(command_prefix=settings['prefix'], intents=intents)
+
 
 @client.event
 async def on_ready():
