@@ -1,8 +1,11 @@
 import json
 import datetime
 from math import floor
+from sre_compile import isstring
 import discord
 
+with open(f"./json/settings.json", "r", encoding="utf-8") as f:
+    settings = json.load(f)
 embedColors = [0x8cffab, 0xff7875]
 
 async def LoadJson(jsonname):
@@ -13,10 +16,10 @@ async def DumpJson(jsonname, data):
     with open(f"./json/{jsonname}.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
-async def CreateEmbed():
-    economy = await LoadJson("data")
+async def CreateEmbed(color = None):
     embed = discord.Embed()
-    #to be added: side color
+    if color is not None: embed.colour = color
+
     return embed
 
 async def CreateUser(id):
@@ -54,16 +57,16 @@ async def SecondsToText(seconds):
 async def AbreviationToInt(text, amount):
     half = ["half", "h"]
     all = ["all", "a"]
+    if amount == 0: return f"not enough {settings['currency'][1]}."
+    if text == None: return amount
 
     text = text.lower()
-    if text in half:
-        return floor(amount / 2)
-    elif text in all:
-        return amount
+    if text in half: return floor(amount / 2)
+    elif text in all: return amount
     else:
         try:
             if int(text) > amount:
-                return f"Cannot enter a number above your total {amount}"
+                return f"Cannot enter a number above your total {amount}."
             elif int(text) <= 0:
                 return "Cannot enter a number smaller or equal to 0."
             else:
@@ -71,7 +74,7 @@ async def AbreviationToInt(text, amount):
         except:
             return f"Supported short words: {half}, {all}. Please use full numbers or these words!"
 
-async def changeBalance(data, id, amount): #for easier transaction stuff
+async def ChangeBalance(data, id, amount): #for easier transaction stuff
     economy = data[id]['economy']
     if (amount >= 0 ):
         economy['pockets'] += amount
@@ -80,4 +83,19 @@ async def changeBalance(data, id, amount): #for easier transaction stuff
     
     economy['pockets'] += amount
     return data
-        
+
+async def TransferBalance(data, id, abreviation, toBank):
+    economy = data[id]['economy']
+    match toBank:
+        case True:
+            amount = await AbreviationToInt(abreviation, economy["pockets"])
+            if isstring(amount): return amount
+            economy["pockets"] -= amount
+            economy["bank"] += amount
+        case False:
+            amount = await AbreviationToInt(abreviation, economy["bank"])
+            if isstring(amount): return amount
+            economy["bank"] -= amount
+            economy["pockets"] += amount
+    return data
+

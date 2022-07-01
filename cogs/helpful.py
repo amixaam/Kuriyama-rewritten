@@ -19,11 +19,11 @@ class Helpful(commands.Cog):
         uid = str(ctx.author.id)
 
         if uid in settings["debug"]:
-            if "debug" not in data[uid]:
-                data[uid]["debug"] = False
-            data[uid]["debug"] = not data[uid]["debug"]
+            if "debug" not in data[uid]["settings"]:
+                data[uid]["settings"]["debug"] = False
+            data[uid]["settings"]["debug"] = not data[uid]["settings"]["debug"]
             await DumpJson("data", data)
-            return await ctx.send(f'debug turned {data[uid]["debug"]}')
+            return await ctx.send(f'debug turned {data[uid]["settings"]["debug"]}')
         await ctx.send("no permission")
 
     #owner commands

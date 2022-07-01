@@ -5,12 +5,10 @@
         "total": 0,
         "net": 0
     },
-    "other": {
-        "daily": 0
-    },
     "timer": {
         "daily": 0
     },
+    "other": {},
     "statistic": {
         "daily": {
             "times": 0,
@@ -22,6 +20,16 @@
             "earned": 0,
             "lost": 0
         },
-        "inventoryOpened": 0
+        "bank":{
+            "times": 0,
+            "withdrawn": 0,
+            "deposited": 0
+        },
+        "other": {
+            "inventoryOpened": 0
+        }
+    },
+    "settings": {
+        "sidecolor": null
     }
 }
