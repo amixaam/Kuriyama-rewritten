@@ -13,6 +13,7 @@ class Economy(commands.Cog):
     async def profile(self, ctx, user: discord.User=None):
         user = ctx.author if not user else user
         uid = str(user.id)
+        settings = await LoadJson("settings")
         data = await LoadJson("data")
         
         if uid not in data:
@@ -45,9 +46,10 @@ class Economy(commands.Cog):
         await DumpJson("data", data)
         await ctx.send(embed=embed)
 
-    @commands.command(brief='Earn daily coins', description=f"Check in every day (0:00 EST) to claim your free daily {settings['currency'][1]} and continue your streak!\nRecieve a bonus between +0% and +40%")
+    @commands.command(brief='Earn daily coins', description=f"Check in every day (0:00 EST) to claim your free daily money and continue your streak!\nRecieve a bonus between +0% and +40%")
     async def daily(self, ctx):
         uid = str(ctx.author.id)
+        settings = await LoadJson("settings")
         data = await LoadJson("data")
         data = await CreateUser(uid)
         data = await UpdateUser(data, uid)
@@ -83,10 +85,11 @@ class Economy(commands.Cog):
         await DumpJson("data", data)
         await ctx.send(embed=embed)
 
-    @commands.command(brief='Gamble your money', description=f"Enter amount of {settings['currency'][1]} you wish to gamble (also can enter: 'half', 'h', 'all', 'a' instead of number).\nTotally a 50/50 chance to double or lose your money")
+    @commands.command(brief='Gamble your money', description=f"Enter amount of money you wish to gamble (also can enter: 'half', 'h', 'all', 'a' instead of number).\nTotally a 50/50 chance to double or lose your money")
     @commands.cooldown(1, 1, commands.BucketType.user)
     async def gamble(self, ctx, amount = None):
         uid = str(ctx.author.id)
+        settings = await LoadJson("settings")
         data = await LoadJson("data")
         data = await CreateUser(uid)
         data = await UpdateUser(data, uid)
@@ -121,6 +124,7 @@ class Economy(commands.Cog):
     @commands.group(brief="a set of commands relating to bank", description="see info about your bank stats")
     async def bank(self, ctx):
         if ctx.invoked_subcommand is not None: return
+        settings = await LoadJson("settings")
         uid = str(ctx.author.id)
         data = await LoadJson("data")
         data = await CreateUser(uid)
@@ -134,8 +138,9 @@ class Economy(commands.Cog):
         
         await ctx.send(embed=embed)
 
-    @bank.command(brief=f'transfer {settings["currency"][1]}', description=f'transfer {settings["currency"][1]} from your bank to your pockets.\n(also can enter: "half", "h", "all", "a" instead of number).')
+    @bank.command(brief=f'transfer money', description=f'transfer money from your bank to your pockets.\n(also can enter: "half", "h", "all", "a" instead of number).')
     async def deposit(self, ctx, amount = None):
+        settings = await LoadJson("settings")
         uid = str(ctx.author.id)
         data = await LoadJson("data")
         data = await CreateUser(uid)
@@ -159,8 +164,9 @@ class Economy(commands.Cog):
         await DumpJson("data", data)
         await ctx.send(embed=embed)
     
-    @bank.command(brief=f'transfer {settings["currency"][1]}', description=f'transfer {settings["currency"][1]} from your bank to your pockets.\n(also can enter: "half", "h", "all", "a" instead of number).')
+    @bank.command(brief=f'transfer money', description=f'transfer money from your bank to your pockets.\n(also can enter: "half", "h", "all", "a" instead of number).')
     async def withdraw(self, ctx, amount = None):
+        settings = await LoadJson("settings")
         uid = str(ctx.author.id)
         data = await LoadJson("data")
         data = await CreateUser(uid)
@@ -186,6 +192,7 @@ class Economy(commands.Cog):
 
     @commands.command(brief='Remove your data', description="enter CONFIRM to remove your data")
     async def deleteprofile(self, ctx, confirm = None):
+        settings = await LoadJson("settings")
         data = await LoadJson("data")
         uid = ctx.author.id
 

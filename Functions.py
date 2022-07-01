@@ -4,8 +4,6 @@ from math import floor
 from sre_compile import isstring
 import discord
 
-with open(f"./json/settings.json", "r", encoding="utf-8") as f:
-    settings = json.load(f)
 embedColors = [0x8cffab, 0xff7875]
 
 async def LoadJson(jsonname):
@@ -17,8 +15,10 @@ async def DumpJson(jsonname, data):
         json.dump(data, f, indent=4)
 
 async def CreateEmbed(color = None):
+    settings = await LoadJson("settings")
     embed = discord.Embed()
     if color is not None: embed.colour = color
+    embed.set_footer(text=settings['version'])
 
     return embed
 
@@ -55,6 +55,7 @@ async def SecondsToText(seconds):
     return str(datetime.timedelta(seconds=seconds))
 
 async def AbreviationToInt(text, amount):
+    settings = await LoadJson("settings")
     half = ["half", "h"]
     all = ["all", "a"]
     if amount == 0: return f"not enough {settings['currency'][1]}."

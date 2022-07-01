@@ -1,8 +1,9 @@
 {
-    "version": "1.0",
+    "version": "beta v1",
     "token": "TOKEN",
-    "debug": [""],
+    "debug": ["428592574723522560"],
     "prefix": ["kuri ", "kuri."],
     "currency": ["¥", "yen"],
-    "traceback": 0
+    "traceback": 805521077294858261,
+    "startup": 805521077294858261
 }
