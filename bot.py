@@ -32,4 +32,4 @@ async def on_command_error(ctx, error):
         c = await client.fetch_channel(settings["traceback"])
         await c.send(f"``````py\n{er}\n``````")
 
-client.run('TOKEN')
+client.run(settings['token'])
